@@ -1,0 +1,32 @@
+<template>
+    <view class="abc">
+        <view>as</view>
+    </view>
+</template>
+
+<script>
+import regeneratorRuntime from '/src/lib/runtime.js'
+
+Page({
+    config: {
+        pages: [
+            'pages/home/index'
+        ]
+    },
+    data: {
+        aaa: '123'
+    },
+    methods: {
+        async aaa() {
+            console.log('asdsadsad');
+        }
+    }
+})
+</script>
+
+<style lang="less">
+@import "../../style/a";
+    .aaa {
+        .abc();
+    }
+</style>
