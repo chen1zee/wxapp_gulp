@@ -1,25 +1,25 @@
 <template>
     <view class="abc">
-        <view>as</view>
+        <view class="aaa">indsdsadsdsex</view>
+        <view bind:tap="aaa">abc</view>
     </view>
 </template>
 
 <script>
-import regeneratorRuntime from '/src/lib/runtime.js'
-
 Page({
-    config: {
-        pages: [
-            'pages/home/index'
-        ]
-    },
     data: {
         aaa: '123'
     },
-    methods: {
-        async aaa() {
-            console.log('asdsadsad');
-        }
+    sleep() {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('success');
+            }, 2000);
+        });
+    },
+    async aaa() {
+        const res = await this.sleep();
+        console.log(res);
     }
 })
 </script>
@@ -27,6 +27,7 @@ Page({
 <style lang="less">
 @import "../../style/a";
     .aaa {
+        font-weight: 800;
         .abc();
     }
 </style>

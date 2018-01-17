@@ -1,0 +1,17 @@
+<template></template>
+
+<script>
+    App({
+        config: {
+            pages: [
+                'pages/home/index'
+            ]
+        },
+        data: {
+
+        }
+    })
+</script>
+
+<style lang="less">
+</style>

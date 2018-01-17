@@ -17,12 +17,16 @@ const babel = require('./packages/babel/index');
 const sourcemaps = require('./packages/sourcemaps/index');
 const less = require('./packages/less/index');
 const replaceAbsolutePath = require('./packages/replace-absolute-path/index');
+const cssToWxss = require('./packages/css-to-wxss');
+const manualAddExt = require('./packages/manual-add-ext');
 
 const gulpFitBreakZeePlugin = {
     babel,
     sourcemaps,
     less,
-    replaceAbsolutePath
+    replaceAbsolutePath,
+    cssToWxss,
+    manualAddExt
 };
 
 module.exports = gulpFitBreakZeePlugin;

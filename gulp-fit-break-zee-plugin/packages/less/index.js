@@ -8,6 +8,9 @@ var PluginError    = require('plugin-error');
 
 var less           = accord.load('less');
 
+/**
+ * 将less 编译成 css
+ * */
 module.exports = function (options) {
     // Mixes in default options.
     var opts = assign({}, {

@@ -1,0 +1,10 @@
+dist/*
+node_modules/*
+.*
+wepy.config.js
+.eslintrc.js
+gulp-break-zee-file/*
+gulp-fit-break-zee-plugin/*
+util/*
+gulpfile.js
+
