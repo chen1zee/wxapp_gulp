@@ -4,6 +4,8 @@ const watch = require('gulp-watch');
 const plumber = require('gulp-plumber'); // 处理 异常 不退出 运行时
 const gulpBreakZeeFile = require('./gulp-break-zee-file/index.js');
 const gulpFitBreakZeePlugin = require('./gulp-fit-break-zee-plugin/index.js');
+const colorConsole = require('./util/colorConsole');
+const eslintConfig = require('./.eslintrc.js');
 
 gulp.task('break-zee-file', zeeFileHandler.bind(gulp.src('src/**/*.zee')));
 gulp.task('lib-js-file', libJsFileHandler.bind(gulp.src('src/lib/**/*.js', { base: path.join(__dirname, 'src/') })))
@@ -22,7 +24,17 @@ gulp.task('watch', [
     gulp.watch('src/**/*.less', (e) => {
         // 只监听 修改
         if ('changed' != e.type) return;
-        zeeFileHandler.call(gulp.src('src/**/*.zee'));
+        const glob = path.posix.normalize(e.path).replace(__dirname, '').replace(/\\/g, '/').replace(/^\//, '');
+        gulp.src(glob, { base: 'src/' })
+            .pipe(plumber())
+            .pipe(gulp.dest('.template-for-zee-file'))
+            .on('finish', () => {
+                templateLessFileHandler.call(gulp.src('.template-for-zee-file/**/*.less'))
+                    .on('finish', () => {
+                        colorConsole.info(`完成 style/*.less 任务
+                        ${glob}`);
+                    });
+            });
     });
 });
 
@@ -46,6 +58,10 @@ function zeeFileHandler() {
         // 预处理
         .pipe(gulpFitBreakZeePlugin.replaceAbsolutePath())
         .pipe(gulpBreakZeeFile())
+        // eslint 检测
+        .pipe(gulpFitBreakZeePlugin.eslint(eslintConfig))
+        // 缓存 分离文件
+        .pipe(gulp.dest('.template-for-zee-file'))
         // 处理less
         .pipe(gulpFitBreakZeePlugin.less({
             paths: [path.join(__dirname, 'src/style')]
@@ -74,8 +90,8 @@ function es6JsFileHandler() {
     return this
         .pipe(plumber())
         .pipe(gulpFitBreakZeePlugin.manualAddExt('js'))
-        .pipe(eslint())
         .pipe(gulpFitBreakZeePlugin.replaceAbsolutePath())
+        .pipe(gulpFitBreakZeePlugin.eslint(eslintConfig))
         .pipe(gulpFitBreakZeePlugin.babel())
         .pipe(gulp.dest('dist'));
 }
@@ -85,9 +101,23 @@ function es6JsFileHandler() {
 function lessFileHandler() {
     return this
         .pipe(plumber())
+        .pipe(gulp.dest('.template-for-zee-file'))
         .pipe(gulpFitBreakZeePlugin.manualAddExt('less'))
         .pipe(gulpFitBreakZeePlugin.less({
             paths: [path.join(__dirname, 'src/style')]
+        }))
+        .pipe(gulpFitBreakZeePlugin.cssToWxss())
+        .pipe(gulp.dest('dist'));
+}
+/**
+ * 处理 .template-for-zee-file的less文件
+ * */
+function templateLessFileHandler() {
+    return this
+        .pipe(plumber())
+        .pipe(gulpFitBreakZeePlugin.manualAddExt('less'))
+        .pipe(gulpFitBreakZeePlugin.less({
+            paths: [path.join(__dirname, '.template-for-zee-file/style')]
         }))
         .pipe(gulpFitBreakZeePlugin.cssToWxss())
         .pipe(gulp.dest('dist'));

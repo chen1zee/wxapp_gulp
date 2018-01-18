@@ -25,9 +25,9 @@ Page({
 </script>
 
 <style lang="less">
-@import "../../style/a";
+    @import "/src/style/color";
     .aaa {
         font-weight: 800;
-        .abc();
+        color: @white;
     }
 </style>

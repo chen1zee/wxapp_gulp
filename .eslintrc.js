@@ -13,12 +13,6 @@ module.exports = {
   plugins: [
     'html'
   ],
-  globals: {
-    app: true,
-    wx: true,
-    getApp: true,
-    getCurrentPages: true
-  },
   // add your custom rules here
   'rules': {
     // allow paren-less arrow functions
@@ -33,6 +27,7 @@ module.exports = {
     'no-multiple-empty-lines': [2, {'max': 2}],
     'indent': [2, 4],
     'no-trailing-spaces': 0,
-    'no-mixed-operators': 0
+    'no-mixed-operators': 0,
+    'func-call-spacing': 0
   }
 }

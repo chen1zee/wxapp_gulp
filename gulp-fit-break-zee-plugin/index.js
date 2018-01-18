@@ -19,6 +19,7 @@ const less = require('./packages/less/index');
 const replaceAbsolutePath = require('./packages/replace-absolute-path/index');
 const cssToWxss = require('./packages/css-to-wxss');
 const manualAddExt = require('./packages/manual-add-ext');
+const eslint = require('./packages/eslint');
 
 const gulpFitBreakZeePlugin = {
     babel,
@@ -26,7 +27,8 @@ const gulpFitBreakZeePlugin = {
     less,
     replaceAbsolutePath,
     cssToWxss,
-    manualAddExt
+    manualAddExt,
+    eslint
 };
 
 module.exports = gulpFitBreakZeePlugin;

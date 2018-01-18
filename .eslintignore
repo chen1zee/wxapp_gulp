@@ -7,4 +7,5 @@ gulp-break-zee-file/*
 gulp-fit-break-zee-plugin/*
 util/*
 gulpfile.js
+.template-for-zee-file/*
 
