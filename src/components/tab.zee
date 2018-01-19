@@ -1,0 +1,102 @@
+<template>
+    <view class="comp__tab--wrapper">
+        <view
+            wx:for="{{list}}" wx:key="type" wx:for-index="index"
+            data-index="{{index}}"
+            bind:tap="tabTap"
+            style="width:{{itemWidth}}"
+            class="comp__tab--cell {{index == active ? 'is-active' : ''}}">
+            <text class="text">{{item.text}}</text>
+            <text wx:if="{{item.num}}" class="badge">{{item.num}}</text>
+        </view>
+    </view>
+</template>
+
+<script>
+    /**
+     * triggerEvent:
+     *      @changeActive(index): index: 下标
+     * */
+    // 计算属性
+    const _computed = {
+        itemWidth(_t, list) {
+            const val = 750 / list.length + 'rpx'
+            _t.setData({ itemWidth: val })
+        }
+    }
+    Component({
+        properties: {
+            list: {
+                type: Array,
+                value: [],
+                observer(val) {
+                    _computed.itemWidth(this, val)
+                }
+            },
+            active: { type: null }
+        },
+        data: {
+            itemWidth: '' // 单位宽
+        },
+        computed: {
+            aaa() {
+                console.log(this)
+            }
+        },
+        methods: {
+            tabTap(e) {
+                this.triggerEvent('changeActive', {
+                    index: e.currentTarget.dataset.index
+                })
+            }
+        },
+        config: {
+            component: true
+        }
+    })
+</script>
+
+<style lang="less">
+    @import "../style/color";
+    @import "../style/iconfont";
+    .comp__tab--wrapper{
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        background-color: @white;
+        font-size: 28rpx;
+        border-bottom: 1rpx solid @silver;
+        .comp__tab--cell{
+            position: relative;
+            display: inline-block;
+            text-align: center;
+            .text{
+                display: inline-block;
+                height: 80rpx;
+                line-height: 80rpx;
+                padding: 0 20rpx;
+            }
+            @badgeHeight: 26rpx;
+            .badge {
+                box-sizing: border-box;
+                position: absolute;
+                top: 24rpx;
+                right: 16rpx;
+                padding: 2rpx 5rpx 0;
+                height: @badgeHeight;
+                min-width: @badgeHeight;
+                border-radius: @badgeHeight / 2;
+                text-align: center;
+                line-height: @badgeHeight;
+                font-size: @badgeHeight * 0.8;
+                color: @white;
+                background-color: @red;
+            }
+            &.is-active .text{
+                border-bottom: 2rpx solid @orange;
+                color: @orange;
+            }
+        }
+    }
+</style>

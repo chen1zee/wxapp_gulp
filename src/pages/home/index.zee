@@ -1,33 +1,15 @@
 <template>
     <view class="abc">
-        <view class="aaa">indsdsadsdsex</view>
-        <view bind:tap="aaa">abc</view>
+        <view class="aaa">home</view>
     </view>
 </template>
 
 <script>
 Page({
-    data: {
-        aaa: '123'
-    },
-    sleep() {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve('success');
-            }, 2000);
-        });
-    },
-    async aaa() {
-        const res = await this.sleep();
-        console.log(res);
-    }
+
 })
 </script>
 
 <style lang="less">
-    @import "/src/style/color";
-    .aaa {
-        font-weight: 800;
-        color: @white;
-    }
+
 </style>

@@ -11,13 +11,16 @@ gulp.task('break-zee-file', zeeFileHandler.bind(gulp.src('src/**/*.zee')));
 gulp.task('lib-js-file', libJsFileHandler.bind(gulp.src('src/lib/**/*.js', { base: path.join(__dirname, 'src/') })))
 gulp.task('es6-js-file', es6JsFileHandler.bind(gulp.src(['src/!(lib)/*.js', 'src/!(lib)/**/*.js', 'src/*.js'], { base: path.join(__dirname, 'src/') })))
 gulp.task('less-file', lessFileHandler.bind(gulp.src('src/**/*.less')));
+gulp.task('source-file', sourceFileHandler.bind(gulp.src('src/**/*.{png,gif,jpg,jpeg}')));
 
 gulp.task('watch', [
+    'source-file',
     'lib-js-file',
     'break-zee-file',
     'es6-js-file',
     'less-file'
 ], () => {
+    sourceFileHandler.call(watchOnlyAddChange('src/**/*.{png,gif,jpg,jpeg}'));
     zeeFileHandler.call(watchOnlyAddChange('src/**/*.zee'));
     libJsFileHandler.call(watchOnlyAddChange('src/lib/**/*.js', { base: path.join(__dirname, 'src/') }));
     es6JsFileHandler.call(watchOnlyAddChange(['src/!(lib)/*.js', 'src/!(lib)/**/*.js', 'src/*.js'], { base: path.join(__dirname, 'src/') }));
@@ -121,4 +124,11 @@ function templateLessFileHandler() {
         }))
         .pipe(gulpFitBreakZeePlugin.cssToWxss())
         .pipe(gulp.dest('dist'));
+}
+/**
+ * 处理 静态资源文件 (copy)
+ * */
+function sourceFileHandler() {
+    return this
+        .pipe(gulp.dest('dist'))
 }

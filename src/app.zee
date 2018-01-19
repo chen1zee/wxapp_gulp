@@ -1,17 +1,71 @@
-<template></template>
-
 <script>
     App({
         config: {
             pages: [
-                'pages/home/index'
-            ]
+                'pages/home/index',
+                'pages/order/index'
+            ],
+            window: {
+                backgroundTextStyle: 'light',
+                navigationBarBackgroundColor: '#fff',
+                navigationBarTitleText: '铂物馆',
+                navigationBarTextStyle: 'black',
+                backgroundColor: '#f2f2f2'
+            },
+            tabBar: {
+                list: [{
+                    text: '首页',
+                    pagePath: 'pages/home/index',
+                    iconPath: 'images/home.png',
+                    selectedIconPath: 'images/home-active.png'
+                }, {
+                    text: '订单',
+                    pagePath: 'pages/order/index',
+                    iconPath: 'images/mine.png',
+                    selectedIconPath: 'images/mine-active.png'
+                }],
+                color: '#666',
+                selectedColor: '#D0A56D'
+            }
         },
-        data: {
-
+        globalData: {
+            a: 123
+        },
+        // 获取设备信息
+        getClientInfo() {
+            const systemInfo = wepy.getSystemInfoSync()
+            clientInfo.set({
+                // lbs位置
+                lbs: ',',
+                // 机型
+                phoneType: '',
+                // app版本号
+                appVersion: '',
+                // 设备号 imei号
+                deviceId: '',
+                // 操作系统版本
+                sysCode: '',
+                // 浏览器类型
+                browserType: '' || '',
+                // 操作系统类型
+                sysType: systemInfo.system,
+                // 渠道包SID
+                channelId: '',
+                // 平台ID
+                platformId: '',
+                // 预订渠道SID （比如微信菜单入口、扫码下单等）
+                sid: '',
+                // 活动ID
+                activityId: '',
+                // 渠道
+                channel: this.globalData.proxyChannel
+            })
         }
     })
 </script>
 
 <style lang="less">
+    page {
+        height: 100%;
+    }
 </style>

@@ -1,0 +1,72 @@
+<!--
+    search:
+        type: 订单状态 0,1,2,3
+-->
+<template>
+    <view class="order--index__container">
+        <Tab class="tab"
+             list="{{tabList}}" active="{{active}}"
+             bind:changeActive="changeActive"></Tab>
+    </view>
+</template>
+
+<script>
+    Page({
+        data: {
+            tabList: [
+                {
+                    text: '全部',
+                    type: 0
+                },
+                {
+                    text: '待付款',
+                    type: 1,
+                    num: 0 // 待付款订单数
+                },
+                {
+                    text: '待收货',
+                    type: 2,
+                    num: 0
+                },
+                {
+                    text: '待点评',
+                    type: 3,
+                    num: 0
+                }
+            ],
+            active: 0
+        },
+        // eventsHandler
+        changeActive(e) {
+            this.setData({ active: e.detail.index })
+        },
+        add() {
+            const list = this.data.list
+            list.push(1)
+            this.setData({ list })
+        },
+
+        config: {
+            navigationBarTitleText: '订单列表',
+            usingComponents: {
+                'Tab': '/src/components/tab'
+            }
+        }
+    })
+
+</script>
+
+<style lang="less">
+    @import "/src/style/color";
+    .order--index__container{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-height: 100%;
+        background-color: @silver-light;
+        .tab-panel{
+            flex: 1;
+            margin-top: 80rpx;
+        }
+    }
+</style>
